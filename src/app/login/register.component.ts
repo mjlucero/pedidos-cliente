@@ -51,7 +51,6 @@ export class RegisterComponent implements OnInit {
 
     if ( !this.formulario.value.terminos ) {
       swal('Importante','Debe de aceptar las condiciones','warning');
-      console.log('Debe aceptar las condiciones');
       return;
     }
 
