@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { UsuarioService } from '../services/service.index';
+import { Usuario } from '../modelos/usuario.model';
+import { Router } from '@angular/router';
 
 declare const swal:any;
 
@@ -14,7 +17,10 @@ export class RegisterComponent implements OnInit {
 
   formulario: FormGroup;
 
-  constructor() { }
+  constructor(
+    public _usuarioService: UsuarioService,
+    public _router: Router
+  ) { }
 
   ngOnInit() {
     init_plugins();
@@ -54,7 +60,14 @@ export class RegisterComponent implements OnInit {
       return;
     }
 
-    console.log( this.formulario.value );
+    let usuario = new Usuario(
+      this.formulario.value.nombre,
+      this.formulario.value.email,
+      this.formulario.value.pass,
+    );
+
+    this._usuarioService.crearUsuario( usuario )
+                        .subscribe( resp => this._router.navigate(['/login']) );
   }
 
 }
