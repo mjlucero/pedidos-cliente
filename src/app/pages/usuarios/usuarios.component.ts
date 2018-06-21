@@ -26,7 +26,7 @@ export class UsuariosComponent implements OnInit {
     this.cargarUsuarios();
 
     this._modalUploadService.notificacion
-        .subscribe( res => this.cargarUsuarios());
+        .subscribe( res => this.cargarUsuarios() );
   }
 
   cargarUsuarios(){
