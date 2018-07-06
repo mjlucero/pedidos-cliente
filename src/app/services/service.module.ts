@@ -2,7 +2,12 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 
-import { SharedService, SidebardService, UsuarioService, LoginGuard, UploadService } from './service.index';
+import { SharedService, 
+  SidebardService, 
+  UsuarioService, 
+  LoginGuard, 
+  UploadService, 
+  RubrosService } from './service.index';
 import { ModalUploadService } from '../components/modal-upload/modal-upload.service';
 
 
@@ -18,7 +23,8 @@ import { ModalUploadService } from '../components/modal-upload/modal-upload.serv
     UsuarioService,
     LoginGuard,
     UploadService,
-    ModalUploadService
+    ModalUploadService,
+    RubrosService
   ],
   declarations: []
 })

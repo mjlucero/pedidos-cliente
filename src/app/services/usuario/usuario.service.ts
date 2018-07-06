@@ -119,8 +119,8 @@ export class UsuarioService {
     return this._http.get<UsuarioRespose>( url, { headers } );
   }
 
-  buscarUsuarios(termino: string){
-    let url = BASE_URL + '/busqueda/coleccion/usuarios/'+ termino;
+  buscarUsuarios(termino: string, desde: number= 0){
+    let url = BASE_URL + '/busqueda/usuarios/'+ termino + '?desde=' + desde;
     
     const headers = new HttpHeaders({
       'Authorization': this.token

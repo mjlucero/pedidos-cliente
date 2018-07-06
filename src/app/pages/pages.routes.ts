@@ -8,6 +8,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
 
 import { LoginGuard } from '../services/service.index';
+import { RubrosComponent } from './rubros/rubros.component';
 
 
 const pageRoutes: Routes = [
@@ -20,6 +21,7 @@ const pageRoutes: Routes = [
             { path: 'perfil', component: ProfileComponent, data: { titulo: 'Perfil de usuario' } },
             //Administracion
             { path: 'usuarios', component: UsuariosComponent, data: { titulo: 'Administacion de usuarios' } },
+            { path: 'rubros', component: RubrosComponent, data: { titulo: 'Administacion de rubros' } },
             { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
         ]
     }

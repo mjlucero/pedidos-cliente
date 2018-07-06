@@ -20,6 +20,10 @@ export class UsuariosComponent implements OnInit {
 
   cargando: boolean = true;
 
+  terminoBusqueda: string = '';
+  desdeBusqueda: number = 0;
+  buscando: boolean = false;
+
   constructor(private _usuarioService: UsuarioService, private _modalUploadService: ModalUploadService) { }
 
   ngOnInit() {
@@ -41,33 +45,56 @@ export class UsuariosComponent implements OnInit {
   }
 
   cambiarDesde( valor:number){
-    let desde = this.desde +valor;
+    if (!this.buscando) {
 
-    if ( desde >= this.total ) {
-      return;
+      let desde = this.desde + valor;
+
+      if ( desde >= this.total ) {
+        return;
+      }
+  
+      if ( desde < 0 ) {
+        return;
+      }
+
+      this.desde += valor;
+      this.cargarUsuarios();
+      
+    }else{
+      let desde = this.desdeBusqueda + valor;
+
+      if ( desde >= this.total ) {
+        return;
+      }
+  
+      if ( desde < 0 ) {
+        return;
+      }
+
+      this.desdeBusqueda += valor;
+      this.buscarUsuario( this.terminoBusqueda );
     }
-
-    if ( desde < 0 ) {
-      return;
-    }
-
-    this.desde += valor;
-    this.cargarUsuarios()
   }
 
   buscarUsuario( termino: string){
-    console.log( termino );
 
     if (termino.length <= 0) {
+      this.terminoBusqueda = '';
+      this.buscando = false;
       this.cargarUsuarios();
       return;
-    }
 
+    }
+    
+    this.terminoBusqueda = termino;
     this.cargando = true;
 
-    this._usuarioService.buscarUsuarios( termino )
+    this._usuarioService.buscarUsuarios( termino, this.desdeBusqueda )
         .subscribe( res =>{
-          console.log( res.usuarios );
+          console.log( res );
+          this.total = res.total;
+          this.buscando = true;
+          this.usuarios = res.usuarios
           this.cargando = false;
         });
   }

@@ -43,8 +43,12 @@
                                 <img [src]="usuario.img | imagen" class="img-50 img-circle pointer" (click)="openModal( usuario._id )">
                             </td>
                             <td>{{ usuario.fechaAlta}}</td>
-                            <td>{{ usuario.email }}</td>
-                            <td>{{ usuario.nombre }}</td>
+                            <td>
+                                <input [(ngModel)]="usuario.email" type="text" class="form-control" name="email" placeholder="Email del usuario">
+                            </td>
+                            <td>
+                                <input [(ngModel)]="usuario.nombre" type="text" class="form-control" name="nombre" placeholder="Nombre del usuario">
+                            </td>
                             <td>
                                 <select [(ngModel)]="usuario.role" name="role" class="form-control">
                                     <option value="ADMIN_ROLE">ADMIN_ROLE</option>

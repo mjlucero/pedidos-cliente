@@ -1,0 +1,115 @@
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <input #input (keyup)="buscarRubro( input.value )" type="text" name="" class="form-control" placeholder="Buscar rubro...">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row" *ngIf="cargando">
+    <div class="col-sm-12">
+        <div class="alert alert-warning text-center">
+            <strong>Cargando...</strong>
+            <br>
+            <i class="fa fa-refresh fa-spin fa-2x"></i>
+            <br>
+            <span>Espere por favor</span>
+        </div>
+    </div>
+</div>
+
+<div class="row" *ngIf="!cargando">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="text-right">
+                    <button type="button" class="btn waves-effect waves-light btn-rounded btn-primary"><i class="fa fa-plus"></i> Crear rubro</button>
+                </div>
+                <h3 class="card-title">Rubros registrados ( <small>{{ total }}</small> )</h3>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Fecha de alta</th>
+                            <th>Codigo</th>
+                            <th>Denominacion</th>
+                            <th>Rubro padre</th>
+                            <th>Fecha de baja</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let rubro of rubros">
+                            <td>{{ rubro.fechaAlta }}</td>
+                            <td>
+                                <input [(ngModel)]="rubro.codigo" type="text" class="form-control" name="codigo" placeholder="Codigo del rubro">
+                            </td>
+                            <td>
+                                <input [(ngModel)]="rubro.denominacion" type="text" class="form-control" name="codigo" placeholder="Codigo del rubro">
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-rounded btn-success" title="Seleccionar padre" data-toggle="modal" data-target="#modalRubros" [attr.data-rubro]="rubro._id">
+                                    {{ rubro.padre === null ? 'No posee' : rubro.padre.denominacion }}
+                                </button>
+                            </td>
+                            <td>{{ rubro.fechaBaja }}</td>
+                            <td>
+                                <button (click)="guardarRubro( rubro )" class="btn btn-primary">
+                                <i class="fa fa-save"></i>
+                              </button>
+
+                                <button class="btn btn-danger" (click)="bajaRubro( rubro )">
+                                <i class="fa fa-trash-o"></i>
+                              </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <button (click)="cambiarDesde(-5)" class="btn btn-secondary">Anteriores</button>
+                <button (click)="cambiarDesde(5)" class="btn btn-secondary">Siguientes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modalRubros" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Rubros disponibles</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body">
+                <ul class="list-group">
+                    <li href="javascript:void(0)" class="list-group-item rubro-items" [attr.data-rubro]="rubro._id" *ngFor="let rubro of rubros" (click)="selectRubro( rubro, $event.target );">{{ rubro.denominacion }}</li>
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Cerrar</button>
+                <!-- <button type="button" class="btn btn-success waves-effect waves-light">Seleccionar rubro</button> -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modalCreate" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Rubros disponibles</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body">
+                <ul class="list-group">
+                    <li href="javascript:void(0)" class="list-group-item rubro-items" [attr.data-rubro]="rubro._id" *ngFor="let rubro of rubros" (click)="selectRubro( rubro, $event.target );">{{ rubro.denominacion }}</li>
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Cerrar</button>
+                <!-- <button type="button" class="btn btn-success waves-effect waves-light">Seleccionar rubro</button> -->
+            </div>
+        </div>
+    </div>
+</div>

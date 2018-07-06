@@ -13,6 +13,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
 
 import { ModalUploadComponent } from '../components/modal-upload/modal-upload.component';
+import { RubrosComponent } from './rubros/rubros.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { ModalUploadComponent } from '../components/modal-upload/modal-upload.co
     GraficasComponent, 
     ProfileComponent, 
     UsuariosComponent,
-    ModalUploadComponent
+    ModalUploadComponent,
+    RubrosComponent
   ],
   imports: [
       CommonModule,
