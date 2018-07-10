@@ -7,7 +7,11 @@ import { SharedService,
   UsuarioService, 
   LoginGuard, 
   UploadService, 
-  RubrosService } from './service.index';
+  RubroService,
+  ClienteService,
+  ArticuloService,
+  DomicilioService,
+  PedidoService } from './service.index';
 import { ModalUploadService } from '../components/modal-upload/modal-upload.service';
 
 
@@ -24,7 +28,11 @@ import { ModalUploadService } from '../components/modal-upload/modal-upload.serv
     LoginGuard,
     UploadService,
     ModalUploadService,
-    RubrosService
+    RubroService,
+    ClienteService,
+    ArticuloService,
+    DomicilioService,
+    PedidoService
   ],
   declarations: []
 })

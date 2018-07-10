@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Rubro } from '../../modelos/rubro.model';
-import { RubrosService } from '../../services/service.index';
+import { RubroService } from '../../services/service.index';
 
 declare const swal:any;
 declare const $:any;
@@ -14,7 +14,7 @@ import * as moment from 'moment';
 export class RubrosComponent implements OnInit {
   
   rubros:Rubro[];
-  rubrosDisponibles:Rubro[] = [];
+  rubroSelected:Rubro;
   editing:number;
 
   desde: number = 0;
@@ -26,52 +26,10 @@ export class RubrosComponent implements OnInit {
   desdeBusqueda: number = 0;
   buscando: boolean = false;
 
-  constructor(private _rubroService:RubrosService) { }
+  constructor(private _rubroService:RubroService) { }
 
   ngOnInit() {
     this.cargarRubros();
-
-    let self = this;
-
-    $('#modalRubros').on('show.bs.modal', function (event) {
-      let button = $(event.relatedTarget);
-      let recipient = button.data('rubro');
-      let items:any = $('.rubro-items');
-
-      for (const i of items) {
-        i.classList.remove('list-group-item-info');
-        i.classList.remove('disabled');
-        i.classList.remove('pointer');
-        i.classList.remove('not-allowed');
-      }
-
-      let rubro:Rubro;
-
-      let index = self.rubros.findIndex((item) => item._id === recipient);
-      self.editing = index;
-
-      rubro = self.rubros[index];
-
- 
-        for (const i of items) {
-          let idHtmlItem = $(i).data('rubro');
-          
-          if (idHtmlItem === rubro._id) {
-            i.classList.add('disabled');
-            i.classList.remove('pointer');
-            i.classList.add('not-allowed');
-          }else{
-            i.classList.add('pointer');
-          }
-
-          if ( rubro.padre ) {
-            if ( idHtmlItem === rubro.padre._id) {
-              i.classList.add('list-group-item-info');
-            }
-          }
-        }
-      
-    });
   }
 
   cargarRubros(){
@@ -82,9 +40,7 @@ export class RubrosComponent implements OnInit {
                         this.total = res.total;
                         this.rubros = res.rubros;
                         this.cargando = false;
-                      });
-
-                      
+                      });               
   }
 
   cambiarDesde( valor:number){
@@ -146,18 +102,33 @@ export class RubrosComponent implements OnInit {
     for (const i of items) {
       i.classList.remove('list-group-item-info');
     }
+
+    let index = this.rubros.findIndex(r => r._id ===  this.rubroSelected._id);
     
-    this.rubros[this.editing].padre = rubro;
+    this.rubros[index].padre = rubro;
 
     item.classList.add('list-group-item-info');
   }
 
+  changePadre( rubro:Rubro){
+    this.rubroSelected = rubro;
+  }
+
   guardarRubro( rubro:Rubro ){
-    console.log(rubro);
-    
     this._rubroService.updateRubro(rubro)
                       .subscribe( res=>{
-                        console.log(res);
+                        swal( res.rubro.denominacion , res.mensaje ,'success');
+                      });
+  }
+
+  crearRubro( formulario:any ){
+    console.log(formulario);
+    
+    let newRubro = new Rubro(formulario.codigo,formulario.denominacion,formulario.padre === "" ? null : formulario.padre );
+    this._rubroService.createRubro(newRubro)
+                      .subscribe( res =>{
+                        swal(res.rubro.denominacion, res.mensaje ,'success');
+                        this.rubros.push(res.rubro);
                       });
   }
 }

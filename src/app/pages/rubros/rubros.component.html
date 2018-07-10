@@ -1,12 +1,4 @@
-<div class="row">
-    <div class="col-12">
-        <div class="card">
-            <div class="card-body">
-                <input #input (keyup)="buscarRubro( input.value )" type="text" name="" class="form-control" placeholder="Buscar rubro...">
-            </div>
-        </div>
-    </div>
-</div>
+<app-buscador (emitTermino)="buscarRubro( $event )" placeholder="Buscar rubro..."></app-buscador>
 
 <div class="row" *ngIf="cargando">
     <div class="col-sm-12">
@@ -25,7 +17,7 @@
         <div class="card">
             <div class="card-body">
                 <div class="text-right">
-                    <button type="button" class="btn waves-effect waves-light btn-rounded btn-primary"><i class="fa fa-plus"></i> Crear rubro</button>
+                    <button type="button" class="btn waves-effect waves-light btn-rounded btn-primary" data-toggle="modal" data-target="#modalCreate"><i class="fa fa-plus"></i> Crear rubro</button>
                 </div>
                 <h3 class="card-title">Rubros registrados ( <small>{{ total }}</small> )</h3>
                 <table class="table table-hover">
@@ -49,7 +41,7 @@
                                 <input [(ngModel)]="rubro.denominacion" type="text" class="form-control" name="codigo" placeholder="Codigo del rubro">
                             </td>
                             <td>
-                                <button type="button" class="btn btn-rounded btn-success" title="Seleccionar padre" data-toggle="modal" data-target="#modalRubros" [attr.data-rubro]="rubro._id">
+                                <button type="button" class="btn btn-rounded btn-success" title="Seleccionar padre" data-toggle="modal" data-target="#modalRubros" [attr.data-rubro]="rubro._id" (click)='changePadre(rubro)'>
                                     {{ rubro.padre === null ? 'No posee' : rubro.padre.denominacion }}
                                 </button>
                             </td>
@@ -83,33 +75,55 @@
             </div>
             <div class="modal-body">
                 <ul class="list-group">
-                    <li href="javascript:void(0)" class="list-group-item rubro-items" [attr.data-rubro]="rubro._id" *ngFor="let rubro of rubros" (click)="selectRubro( rubro, $event.target );">{{ rubro.denominacion }}</li>
+                    <li href="javascript:void(0)" class="pointer list-group-item rubro-items" [ngClass]="{'list-group-item-info': rubroSelected !== undefined ? (rubroSelected.padre === null ? true : false) : false  }" (click)="selectRubro( null, $event.target );">
+                        No posee
+                    </li>
+                    <li href="javascript:void(0)" class="pointer list-group-item rubro-items" [ngClass]="{'list-group-item-info': rubroSelected.padre !== null ? rubro._id === rubroSelected.padre._id : false }" *ngFor="let rubro of rubros | filter:rubroSelected" (click)="selectRubro( rubro, $event.target );">{{ rubro.denominacion }}</li>
                 </ul>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Cerrar</button>
-                <!-- <button type="button" class="btn btn-success waves-effect waves-light">Seleccionar rubro</button> -->
             </div>
         </div>
     </div>
 </div>
 
+
 <div id="modalCreate" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">Rubros disponibles</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-            </div>
-            <div class="modal-body">
-                <ul class="list-group">
-                    <li href="javascript:void(0)" class="list-group-item rubro-items" [attr.data-rubro]="rubro._id" *ngFor="let rubro of rubros" (click)="selectRubro( rubro, $event.target );">{{ rubro.denominacion }}</li>
-                </ul>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Cerrar</button>
-                <!-- <button type="button" class="btn btn-success waves-effect waves-light">Seleccionar rubro</button> -->
-            </div>
+            <form #f="ngForm" ngNativeValidate (ngSubmit)="crearRubro(f.value)" class="floating-labels">
+                <div class="modal-header m-b-20">
+                    <h4 class="modal-title">Nuevo rubro</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group m-b-40">
+                        <input type="text" name="codigo" class="form-control" id="txtCodigo" ngModel required>
+                        <span class="bar"></span>
+                        <label for="txtCodigo">Codigo</label>
+                    </div>
+                    <div class="form-group m-b-40">
+                        <input type="text" name="denominacion" class="form-control" id="txtDenominacion" ngModel required>
+                        <span class="bar"></span>
+                        <label for="txtDenominacion">Denominacion</label>
+                    </div>
+                    <div class="form-group">
+                        <select class="form-control p-0" id="selPadre" name="padre" ngModel>
+                            <option [value]=""></option>
+                            <option [value]="rubro._id" *ngFor="let rubro of rubros">{{ rubro.denominacion }}</option>
+                        </select>
+                        <span class="bar"></span>
+                        <label for="selPadre">Rubro padre</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-success waves-effect waves-light m-r-10">
+                        <i class="fa fa-save"></i> Crear rubro
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 </div>

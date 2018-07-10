@@ -2,11 +2,11 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BASE_URL } from '../../config/config';
 import { UsuarioService } from '../usuario/usuario.service';
-import { RubroRespose } from '../../interfaces/rubros.inteface';
+import { RubroRespose } from '../../respuestas/rubro.response';
 import { Rubro } from '../../modelos/rubro.model';
 
 @Injectable()
-export class RubrosService {
+export class RubroService {
 
   token: string;
 

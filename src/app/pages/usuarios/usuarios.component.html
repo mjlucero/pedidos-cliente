@@ -1,12 +1,4 @@
-<div class="row">
-    <div class="col-12">
-        <div class="card">
-            <div class="card-body">
-                <input #input (keyup)="buscarUsuario( input.value )" type="text" name="" class="form-control" placeholder="Buscar usuario...">
-            </div>
-        </div>
-    </div>
-</div>
+<app-buscador (emitTermino)="buscarUsuario( $event )" placeholder="Buscar usuario..."></app-buscador>
 
 <div class="row" *ngIf="cargando">
     <div class="col-sm-12">

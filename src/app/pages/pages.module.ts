@@ -6,25 +6,42 @@ import { SharedModule } from "../shared/shared.module";
 import { PipesModule } from "../pipes/pipes.module";
 
 import { PagesComponent } from "./pages.component";
+import { ModalUploadComponent } from '../components/modal-upload/modal-upload.component';
+import { BuscadorComponent } from "../components/buscador/buscador.component";
+
 import { DashboardComponent } from "./dashboard/dashboard.component";
-import { ProgressComponent } from "./progress/progress.component";
 import { GraficasComponent } from "./graficas/graficas.component";
 import { ProfileComponent } from './profile/profile.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
-
-import { ModalUploadComponent } from '../components/modal-upload/modal-upload.component';
 import { RubrosComponent } from './rubros/rubros.component';
+import { ClientesComponent } from './clientes/clientes.component';
+import { ClienteComponent } from './clientes/cliente.component';
+import { DomiciliosComponent } from './domicilios/domicilios.component';
+import { DomicilioComponent } from './domicilios/domicilio.component';
+import { ArticulosComponent } from './articulos/articulos.component';
+import { ArticuloComponent } from './articulos/articulo.component';
+import { PedidosComponent } from './pedidos/pedidos.component';
+import { PedidoComponent } from './pedidos/pedido.component';
+
 
 @NgModule({
   declarations: [
     PagesComponent,
     DashboardComponent,
-    ProgressComponent, 
     GraficasComponent, 
     ProfileComponent, 
     UsuariosComponent,
     ModalUploadComponent,
-    RubrosComponent
+    BuscadorComponent,
+    RubrosComponent,
+    ClientesComponent,
+    ClienteComponent,
+    DomiciliosComponent,
+    DomicilioComponent,
+    ArticulosComponent,
+    ArticuloComponent,
+    PedidosComponent,
+    PedidoComponent
   ],
   imports: [
       CommonModule,
@@ -36,7 +53,6 @@ import { RubrosComponent } from './rubros/rubros.component';
   exports: [
     PagesComponent,
     DashboardComponent, 
-    ProgressComponent,
     GraficasComponent,
     ModalUploadComponent
   ],

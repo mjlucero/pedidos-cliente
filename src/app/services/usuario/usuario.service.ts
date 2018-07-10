@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Usuario } from '../../modelos/usuario.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BASE_URL } from '../../config/config';
-import { UsuarioRespose } from '../../interfaces/usuario.interface';
+import { UsuarioRespose } from '../../respuestas/usuario.response';
 import "rxjs/add/operator/map";
 import { Router } from '@angular/router';
 import { UploadService } from '../upload/upload.service';

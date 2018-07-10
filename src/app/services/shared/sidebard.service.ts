@@ -15,11 +15,12 @@ export class SidebardService {
       titulo: 'Administracion',
       icono: 'mdi mdi-folder-lock-open',
       submenu:[
-        { titulo: 'Usuarios', url: '/usuarios'},
-        { titulo: 'Clientes', url: '/clientes'},
         { titulo: 'Articulos', url: '/articulos'},
-        { titulo: 'Rubros', url: '/rubros'},
+        { titulo: 'Clientes', url: '/clientes'},
+        { titulo: 'Domicilios', url: '/domicilios'},
         { titulo: 'Pedidos', url: '/pedidos'},
+        { titulo: 'Rubros', url: '/rubros'},
+        { titulo: 'Usuarios', url: '/usuarios'}
       ]
     }
   ];
