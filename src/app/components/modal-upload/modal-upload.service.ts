@@ -6,6 +6,7 @@ export class ModalUploadService {
   public tipo: string;
   public id: string;
   public token: string;
+  public img: string;
 
   public hide: string = 'm-hide';
 
@@ -20,9 +21,10 @@ export class ModalUploadService {
     this.hide = 'm-hide';
   }
 
-  showModal( tipo:string, id: string, token:string ){
+  showModal( tipo:string, id: string, img:string ,token:string ){
     this.id = id;
     this.tipo = tipo;
+    this.img = img;
     this.token = token;
     this.hide = '';
   }

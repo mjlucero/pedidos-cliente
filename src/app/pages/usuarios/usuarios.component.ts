@@ -30,7 +30,16 @@ export class UsuariosComponent implements OnInit {
     this.cargarUsuarios();
 
     this._modalUploadService.notificacion
-        .subscribe( res => this.cargarUsuarios() );
+        .subscribe( res =>{
+          console.log(res);
+          for (const usuario of this.usuarios) {
+            if ( usuario._id === res.usuario._id) {
+              usuario.img = res.img;
+              swal(usuario.nombre, 'Imagen actualizada correctamente', 'success');
+              break;
+            }
+          }
+        });
   }
 
   cargarUsuarios(){
@@ -128,8 +137,8 @@ export class UsuariosComponent implements OnInit {
           .subscribe();
   }
 
-  openModal( id: string ){
-    this._modalUploadService.showModal('usuarios',id, this._usuarioService.token );
+  openModal( usuario: Usuario ){
+    this._modalUploadService.showModal('usuarios', usuario._id, usuario.img, this._usuarioService.token);
   }
 
 }

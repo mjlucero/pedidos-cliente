@@ -5,9 +5,8 @@ import { FormsModule } from '@angular/forms'
 import { SharedModule } from "../shared/shared.module";
 import { PipesModule } from "../pipes/pipes.module";
 
-import { PagesComponent } from "./pages.component";
-import { ModalUploadComponent } from '../components/modal-upload/modal-upload.component';
 import { BuscadorComponent } from "../components/buscador/buscador.component";
+
 
 import { DashboardComponent } from "./dashboard/dashboard.component";
 import { GraficasComponent } from "./graficas/graficas.component";
@@ -23,15 +22,16 @@ import { ArticuloComponent } from './articulos/articulo.component';
 import { PedidosComponent } from './pedidos/pedidos.component';
 import { PedidoComponent } from './pedidos/pedido.component';
 
+import { AgmCoreModule } from '@agm/core';
+
+
 
 @NgModule({
   declarations: [
-    PagesComponent,
     DashboardComponent,
     GraficasComponent, 
     ProfileComponent, 
     UsuariosComponent,
-    ModalUploadComponent,
     BuscadorComponent,
     RubrosComponent,
     ClientesComponent,
@@ -48,13 +48,14 @@ import { PedidoComponent } from './pedidos/pedido.component';
       SharedModule,
       PAGES_ROUTES,
       FormsModule,
-      PipesModule
+      PipesModule,
+      AgmCoreModule.forRoot({
+        apiKey: 'AIzaSyDOP6i326mY32uBmQMc9-yxg0T6ink5-rE'
+      })
     ],
   exports: [
-    PagesComponent,
     DashboardComponent, 
-    GraficasComponent,
-    ModalUploadComponent
+    GraficasComponent
   ],
   providers: [
 

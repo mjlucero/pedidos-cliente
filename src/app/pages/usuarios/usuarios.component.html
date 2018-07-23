@@ -32,7 +32,7 @@
                     <tbody>
                         <tr *ngFor="let usuario of usuarios">
                             <td class="w70">
-                                <img [src]="usuario.img | imagen" class="img-50 img-circle pointer" (click)="openModal( usuario._id )">
+                                <img [src]="usuario.img | imagen" class="img-50 img-circle pointer" (click)="openModal( usuario )">
                             </td>
                             <td>{{ usuario.fechaAlta}}</td>
                             <td>

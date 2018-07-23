@@ -12,14 +12,14 @@ export class ImagenPipe implements PipeTransform {
     if ( !img ) {
       return url + 'usuarios/xxx';
     }
-
+    
     switch (tipo) {
       case 'usuarios':
         url += 'usuarios/'+ img;
       break;
 
-      case 'artitulos':
-        url += 'articulos/'+ img;
+      case 'articulos':
+        url += 'articulos/'+ img;  
       break;
 
       default:

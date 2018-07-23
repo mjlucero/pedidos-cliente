@@ -38,3 +38,7 @@
 .m-t-10 {
     margin-top: 10px;
 }
+
+agm-map {
+    height: 300px;
+}

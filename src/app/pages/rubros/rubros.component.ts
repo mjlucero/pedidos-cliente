@@ -15,7 +15,6 @@ export class RubrosComponent implements OnInit {
   
   rubros:Rubro[];
   rubroSelected:Rubro;
-  editing:number;
 
   desde: number = 0;
   total: number = 0;

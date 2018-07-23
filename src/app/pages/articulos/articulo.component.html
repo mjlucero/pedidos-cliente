@@ -1,3 +1,58 @@
-<p>
-  articulo works!
-</p>
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <form #f="ngForm" ngNativeValidate class="form-material m-t-20" (ngSubmit)="guardarArticulo(f)">
+                    <div class="form-group">
+                        <label>Denominacion</label>
+                        <input [(ngModel)]="articulo.denominacion" type="text" class="form-control" name="denominacion" id="denominacion">
+                    </div>
+                    <div class="form-group">
+                        <label>Codigo</label>
+                        <input [(ngModel)]="articulo.codigo" type="text" class="form-control" name="codigo" id="codigo">
+                    </div>
+                    <div class="form-group">
+                        <label>Precio Compra</label>
+                        <input [(ngModel)]="articulo.precioCompra" type="text" class="form-control" name="precioCompra" id="precioCompra">
+                    </div>
+                    <div class="form-group">
+                        <label>Precio Venta</label>
+                        <input [(ngModel)]="articulo.precioVenta" type="text" class="form-control" name="precioVenta" id="precioVenta">
+                    </div>
+                    <div class="form-group">
+                        <label>Iva</label>
+                        <input [(ngModel)]="articulo.iva" type="text" class="form-control" name="iva" id="iva">
+                    </div>
+                    <div class="form-group">
+                        <label>Rubro</label>
+                        <select [(ngModel)]="articulo.rubro._id" class="form-control p-0" name="rubro" id="rubro">
+                            <option value=""></option>
+                            <option *ngFor="let rubro of rubros" [value]="rubro._id">{{ rubro.denominacion }}</option>
+                          </select>
+                    </div>
+                    <div class="form-group text-right">
+                        <button type="submit" class="btn btn-info"><i class="fa fa-save"></i> Guardar</button>
+                        <a routerLink="/articulos" class="btn btn-inverse">Cancelar</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body" align="center">
+                <h4 class="card-title">Imagen</h4>
+
+                <img *ngIf="!imageTemp" [src]="articulo.img | imagen:'articulos'" class="w150">
+                <img *ngIf="imageTemp" [src]="imageTemp" class="w150">
+
+                <input (change)="getImage( $event.target.files[0] )" type="file">
+                <br><br>
+                <div *ngIf="!articulo._id" class="alert alert-warning" role="alert">
+                    No se actualizar la imagen de un articulo no creado
+                </div>
+                <button (click)="uploadImage()" [disabled]="!uploadImage || !articulo._id" type="button" class="btn btn-success waves-effect waves-light m-r-10"><i class="fa fa-save"></i> Actualizar Foto</button>
+            </div>
+        </div>
+    </div>
+</div>

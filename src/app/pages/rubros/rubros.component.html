@@ -38,7 +38,7 @@
                                 <input [(ngModel)]="rubro.codigo" type="text" class="form-control" name="codigo" placeholder="Codigo del rubro">
                             </td>
                             <td>
-                                <input [(ngModel)]="rubro.denominacion" type="text" class="form-control" name="codigo" placeholder="Codigo del rubro">
+                                <input [(ngModel)]="rubro.denominacion" type="text" class="form-control" name="denominacion" placeholder="Denominacion del rubro">
                             </td>
                             <td>
                                 <button type="button" class="btn btn-rounded btn-success" title="Seleccionar padre" data-toggle="modal" data-target="#modalRubros" [attr.data-rubro]="rubro._id" (click)='changePadre(rubro)'>

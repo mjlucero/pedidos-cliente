@@ -1,4 +1,4 @@
-import { Rubro } from "./rubro.model";
+import { Rubro } from './rubro.model';
 
 export class Articulo {
     constructor(

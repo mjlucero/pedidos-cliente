@@ -1,1 +1,70 @@
 <app-buscador (emitTermino)="buscarCliente( $event )" placeholder="Buscar cliente..."></app-buscador>
+
+<div class="row" *ngIf="cargando">
+    <div class="col-sm-12">
+        <div class="alert alert-warning text-center">
+            <strong>Cargando...</strong>
+            <br>
+            <i class="fa fa-refresh fa-spin fa-2x"></i>
+            <br>
+            <span>Espere por favor</span>
+        </div>
+    </div>
+</div>
+
+<div class="row" *ngIf="!cargando">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="text-right">
+                    <button type="button" [routerLink]="['/cliente', 'nuevo']" class="btn waves-effect waves-light btn-rounded btn-primary"><i class="fa fa-plus"></i> Crear cliente</button>
+                </div>
+                <h3 class="card-title">Clientes registrados ( <small>{{ total }}</small> )</h3>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Alta</th>
+                            <th>Razon Social</th>
+                            <th>Domicilio</th>
+                            <th>Cuit</th>
+                            <th>Saldo</th>
+                            <th>Baja</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let cliente of clientes">
+                            <td>
+                                {{ cliente.fechaAlta }}
+                            </td>
+                            <td>
+                                {{ cliente.razonSocial }}
+                            </td>
+                            <td>
+                                {{ cliente.cuit }}
+                            </td>
+                            <td>
+                                {{ cliente.saldo }}
+                            </td>
+                            <td>
+                                {{ articulo.fechaBaja }}
+                            </td>
+                            <td>
+                                <button [routerLink]="['/cliente', cliente._id]" class="btn btn-primary">
+                                <i class="fa fa-pencil"></i>
+                              </button>
+
+                                <button class="btn btn-danger" (click)="bajaCliente( cliente )">
+                                <i class="fa fa-trash-o"></i>
+                              </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <button (click)="cambiarDesde(-5)" class="btn btn-secondary">Anteriores</button>
+                <button (click)="cambiarDesde(5)" class="btn btn-secondary">Siguientes</button>
+            </div>
+        </div>
+    </div>
+</div>

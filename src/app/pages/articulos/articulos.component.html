@@ -1,1 +1,77 @@
-<app-buscador (emitTermino)="buscarArticulo( $event )" placeholder="Buscar articulo..."></app-buscador>
+<app-buscador (emitTermino)="buscarArticulos( $event )" placeholder="Buscar articulo..."></app-buscador>
+
+<div class="row" *ngIf="cargando">
+    <div class="col-sm-12">
+        <div class="alert alert-warning text-center">
+            <strong>Cargando...</strong>
+            <br>
+            <i class="fa fa-refresh fa-spin fa-2x"></i>
+            <br>
+            <span>Espere por favor</span>
+        </div>
+    </div>
+</div>
+
+<div class="row" *ngIf="!cargando">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="text-right">
+                    <button type="button" [routerLink]="['/articulo', 'nuevo']" class="btn waves-effect waves-light btn-rounded btn-primary"><i class="fa fa-plus"></i> Crear articulo</button>
+                </div>
+                <h3 class="card-title">Articulos registrados ( <small>{{ total }}</small> )</h3>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Imagen</th>
+                            <th>Alta</th>
+                            <th>Codigo</th>
+                            <th>Denominacion</th>
+                            <th>Rubro</th>
+                            <th>Precio</th>
+                            <th>Baja</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let articulo of articulos">
+                            <td class="w70">
+                                <img [src]="articulo.img | imagen:'articulos' " class="img-50 img-circle pointer" (click)="openModal( articulo )">
+                            </td>
+                            <td>
+                                {{ articulo.fechaAlta }}
+                            </td>
+                            <td>
+                                {{ articulo.codigo }}
+                            </td>
+                            <td>
+                                {{ articulo.denominacion }}
+                            </td>
+                            <td>
+                                <span class="badge badge-warning">{{ articulo.rubro.denominacion }}</span>
+                            </td>
+                            <td>
+                                {{ articulo.precioCompra }}
+                            </td>
+                            <td>
+                                {{ articulo.fechaBaja }}
+                            </td>
+                            <td>
+                                <button [routerLink]="['/articulo', articulo._id]" class="btn btn-primary">
+                                <i class="fa fa-pencil"></i>
+                              </button>
+
+                                <button class="btn btn-danger" (click)="bajaArticulo( articulo )">
+                                <i class="fa fa-trash-o"></i>
+                              </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <button (click)="cambiarDesde(-5)" class="btn btn-secondary">Anteriores</button>
+                <button (click)="cambiarDesde(5)" class="btn btn-secondary">Siguientes</button>
+            </div>
+        </div>
+    </div>
+</div>

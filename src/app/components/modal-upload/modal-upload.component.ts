@@ -14,13 +14,12 @@ export class ModalUploadComponent implements OnInit {
   imageUpload: File;
   imageTemp: File;
 
-  constructor( private _uploadService: UploadService, public _modalUploadService: ModalUploadService ) { }
+  constructor( private _uploadService: UploadService, public _modalUploadService: ModalUploadService ) {}
 
   ngOnInit() {
   }
 
   getImage( file: File ){
-    
     if ( !file ){
       this.imageUpload = null;
       this.imageTemp = null;
@@ -37,8 +36,7 @@ export class ModalUploadComponent implements OnInit {
     this.imageUpload = file;
 
     let reader = new FileReader();
-    let urlImageTemp = reader.readAsDataURL( file );
-
+    reader.readAsDataURL( file );
     reader.onloadend = ()=> this.imageTemp = reader.result;
   }
 
@@ -48,7 +46,6 @@ export class ModalUploadComponent implements OnInit {
           return res.json();
         })
         .then( data =>{
-          console.log(data);
           this._modalUploadService.notificacion.emit( data );
           this.closeModal();
         })
