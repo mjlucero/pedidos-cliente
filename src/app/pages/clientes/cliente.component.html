@@ -26,14 +26,13 @@
     <div class="col-md-6">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">Domicilio</h4>
                 <form class="form-material m-t-20">
                     <div class="form-group">
                         <label>Direccion</label>
-                        <input type="text" class="form-control" name="" id="">
+                        <input type="text" class="form-control" name="" id="" autocorrect="off" autocapitalize="off" spellcheck="off" #search [formControl]="searchControl">
                     </div>
                 </form>
-                <agm-map [latitude]="lat" [longitude]="lng" [zoom]="15">
+                <agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom">
                     <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
                 </agm-map>
             </div>

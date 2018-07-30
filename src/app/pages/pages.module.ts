@@ -1,7 +1,7 @@
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { PAGES_ROUTES } from "./pages.routes";
-import { FormsModule } from '@angular/forms'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { SharedModule } from "../shared/shared.module";
 import { PipesModule } from "../pipes/pipes.module";
 
@@ -48,9 +48,11 @@ import { AgmCoreModule } from '@agm/core';
       SharedModule,
       PAGES_ROUTES,
       FormsModule,
+      ReactiveFormsModule,
       PipesModule,
       AgmCoreModule.forRoot({
-        apiKey: 'AIzaSyDOP6i326mY32uBmQMc9-yxg0T6ink5-rE'
+        apiKey: 'AIzaSyDOP6i326mY32uBmQMc9-yxg0T6ink5-rE',
+        libraries: ["places"]
       })
     ],
   exports: [
