@@ -90,6 +90,4 @@ export class ClientesComponent implements OnInit {
       this.buscarClientes( this.terminoBusqueda );
     }
   }
-
-
 }

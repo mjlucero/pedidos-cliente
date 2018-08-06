@@ -1,9 +1,9 @@
+import { map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { Usuario } from '../../modelos/usuario.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BASE_URL } from '../../config/config';
 import { UsuarioRespose } from '../../respuestas/usuario.response';
-import "rxjs/add/operator/map";
 import { Router } from '@angular/router';
 import { UploadService } from '../upload/upload.service';
 
@@ -26,11 +26,11 @@ export class UsuarioService {
   crearUsuario( usuario: Usuario){
     let url = BASE_URL + '/usuario';
 
-    return this._http.post<UsuarioRespose>( url, usuario )
-                     .map( res =>{
+    return this._http.post<UsuarioRespose>( url, usuario ).pipe(
+                     map( res =>{
                         swal( res.mensaje , res.usuario.email, 'success');
                         return res.usuario;
-                     });
+                     }));
   }
 
   login( usuario: Usuario, recordar:boolean = false ){
@@ -42,13 +42,13 @@ export class UsuarioService {
       localStorage.removeItem('email');
     }
 
-    return this._http.post<UsuarioRespose>( url, usuario)
-                     .map( res =>{
+    return this._http.post<UsuarioRespose>( url, usuario).pipe(
+                     map( res =>{
 
                       this.actualizarStorage(res.id, res.token, res.usuario);
                       return true;
 
-                     });
+                     }));
   }
 
   logout(){
@@ -91,8 +91,8 @@ export class UsuarioService {
       'Authorization': this.token
     });
 
-    return this._http.put<UsuarioRespose>(url, usuario, { headers } )
-                     .map( res =>{
+    return this._http.put<UsuarioRespose>(url, usuario, { headers } ).pipe(
+                     map( res =>{
                         
                       if (!baja) {
 
@@ -106,7 +106,7 @@ export class UsuarioService {
                       }else{
                         swal(res.usuario.nombre, 'Se dio de baja correctamente' ,'success');
                       }
-                     });
+                     }));
   }
 
   cargarUsuarios( desde:number = 0){

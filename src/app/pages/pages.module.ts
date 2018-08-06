@@ -1,10 +1,10 @@
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { PAGES_ROUTES } from "./pages.routes";
-import { FormsModule, ReactiveFormsModule } from '@angular/forms'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgSelectModule } from '@ng-select/ng-select';
 import { SharedModule } from "../shared/shared.module";
 import { PipesModule } from "../pipes/pipes.module";
-
 import { BuscadorComponent } from "../components/buscador/buscador.component";
 
 
@@ -48,6 +48,7 @@ import { AgmCoreModule } from '@agm/core';
       SharedModule,
       PAGES_ROUTES,
       FormsModule,
+      NgSelectModule,
       ReactiveFormsModule,
       PipesModule,
       AgmCoreModule.forRoot({

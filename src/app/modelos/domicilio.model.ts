@@ -1,8 +1,6 @@
 export class Domicilio {
     constructor(
-        public calle: string,
-        public numero: number,
-        public localidad: string,
+        public direccion: string,
         public latitud: number,
         public longitud: number,
         public fechaAlta?: string,

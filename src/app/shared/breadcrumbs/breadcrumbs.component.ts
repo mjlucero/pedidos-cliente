@@ -1,6 +1,5 @@
+import { map, filter } from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
-import 'rxjs/add/operator/filter';
-import 'rxjs/add/operator/map';
 import { Router, ActivationEnd } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 
@@ -26,10 +25,10 @@ export class BreadcrumbsComponent implements OnInit {
   }
 
   getDataRoute(){
-    return this._router.events
-            .filter( evento => evento instanceof ActivationEnd)
-            .filter( (evento:ActivationEnd) => evento.snapshot.firstChild === null  )
-            .map( (evento:ActivationEnd) => evento.snapshot.data );
+    return this._router.events.pipe(
+            filter( evento => evento instanceof ActivationEnd),
+            filter( (evento:ActivationEnd) => evento.snapshot.firstChild === null  ),
+            map( (evento:ActivationEnd) => evento.snapshot.data ),);
   }
 
 }

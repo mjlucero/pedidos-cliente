@@ -11,6 +11,9 @@
                         <label>Cuit</label>
                         <input [(ngModel)]="cliente.cuit" type="text" class="form-control" name="cuit" id="cuit">
                     </div>
+                    <label>Domicilio</label>
+                    <ng-select (change)="changeDomicilio()" [items]="domicilios" bindLabel="direccion" bindValue="_id" [(ngModel)]="domicilioSelected" [ngModelOptions]="{standalone: true}">
+                    </ng-select>
                     <div class="form-group">
                         <label>Saldo</label>
                         <input [(ngModel)]="cliente.saldo" type="text" class="form-control" name="saldo" id="saldo">
@@ -32,8 +35,8 @@
                         <input type="text" class="form-control" name="" id="" autocorrect="off" autocapitalize="off" spellcheck="off" #search [formControl]="searchControl">
                     </div>
                 </form>
-                <agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom">
-                    <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+                <agm-map (mapClick)="setDomicilio( $event )" [latitude]="domicilio.latitud" [longitude]="domicilio.longitud" [zoom]="zoom">
+                    <agm-marker [latitude]="domicilio.latitud" [longitude]="domicilio.longitud"></agm-marker>
                 </agm-map>
             </div>
         </div>

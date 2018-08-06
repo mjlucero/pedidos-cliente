@@ -1,3 +1,25 @@
-<p>
-  domicilio works!
-</p>
+<div class="row">
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+                <form class="form-material">
+                    <div class="form-group">
+                        <label>Direccion</label>
+                        <input type="text" class="form-control" name="" id="" autocorrect="off" autocapitalize="off" spellcheck="off" #search [formControl]="searchControl">
+                    </div>
+                    <div class="form-group">
+                        <agm-map (mapClick)="setDomicilio( $event )" [style.height.px]="400" [latitude]="domicilio.latitud" [longitude]="domicilio.longitud" [zoom]="zoom">
+                            <agm-marker [latitude]="domicilio.latitud" [longitude]="domicilio.longitud"></agm-marker>
+                        </agm-map>
+                    </div>
+
+
+                    <div class="form-group text-right">
+                        <button type="submit" class="btn btn-info" (click)="saveDomicilio()"><i class="fa fa-save"></i> Guardar</button>
+                        <a routerLink="/domicilios" class="btn btn-inverse">Cancelar</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

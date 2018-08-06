@@ -1,1 +1,61 @@
 <app-buscador (emitTermino)="buscarDomicilio( $event )" placeholder="Buscar domicilio..."></app-buscador>
+
+<div class="row" *ngIf="cargando">
+    <div class="col-sm-12">
+        <div class="alert alert-warning text-center">
+            <strong>Cargando...</strong>
+            <br>
+            <i class="fa fa-refresh fa-spin fa-2x"></i>
+            <br>
+            <span>Espere por favor</span>
+        </div>
+    </div>
+</div>
+
+<div class="row" *ngIf="!cargando">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="text-right">
+                    <button type="button" [routerLink]="['/domicilio', 'nuevo']" class="btn waves-effect waves-light btn-rounded btn-primary"><i class="fa fa-plus"></i> Crear Domicilio</button>
+                </div>
+                <h3 class="card-title">Domicilios registrados ( <small>{{ total }}</small> )</h3>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Alta</th>
+                            <th>Direccion</th>
+                            <th>Baja</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let domicilio of domicilios">
+                            <td>
+                                {{ domicilio.fechaAlta }}
+                            </td>
+                            <td>
+                                {{ domicilio.direccion }}
+                            </td>
+                            <td>
+                                {{ domicilio.fechaBaja }}
+                            </td>
+                            <td>
+                                <button [routerLink]="['/domicilio', domicilio._id]" class="btn btn-primary">
+                                <i class="fa fa-pencil"></i>
+                              </button>
+
+                                <button class="btn btn-danger" (click)="bajaDomicilio( domicilio )">
+                                <i class="fa fa-trash-o"></i>
+                              </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <button (click)="cambiarDesde(-5)" class="btn btn-secondary">Anteriores</button>
+                <button (click)="cambiarDesde(5)" class="btn btn-secondary">Siguientes</button>
+            </div>
+        </div>
+    </div>
+</div>

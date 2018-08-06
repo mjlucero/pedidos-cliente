@@ -5,11 +5,8 @@ import { Cliente } from '../../modelos/cliente.model';
 import { Domicilio } from '../../modelos/domicilio.model';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MapsAPILoader } from '@agm/core';
-
-
-
+import { DomicilioService } from '../../services/domicilio/domicilio.service';
 declare const swal:any;
-declare var google: any;
 
 @Component({
   selector: 'app-cliente',
@@ -18,12 +15,16 @@ declare var google: any;
 })
 export class ClienteComponent implements OnInit {
 
-  domicilio: Domicilio = new Domicilio('',0,'',0,0);
-  cliente: Cliente = new Cliente('',this.domicilio,0,0);
+  edit: boolean = true;
+
+  domicilios: Domicilio[] = [];
+  domicilio: Domicilio = new Domicilio('',0,0);
+  cliente: Cliente = new Cliente('',0,0);
+  domicilioSelected: string = '';
 
   searchControl: FormControl;
-  lat: number = 51.678418;
-  lng: number = 7.809007;
+  lat: number = 0;
+  lng: number = 0;
   zoom: number = 15;
 
   @ViewChild("search")
@@ -31,7 +32,7 @@ export class ClienteComponent implements OnInit {
 
   constructor(
     private _clienteService: ClienteService,
-    // private _rubroService: RubroService,
+    private _domicilioService: DomicilioService,
     private router: Router,
     private activeRoute: ActivatedRoute,
     private mapsAPILoader: MapsAPILoader,
@@ -44,6 +45,8 @@ export class ClienteComponent implements OnInit {
           
                   if ( id !== 'nuevo' ) {
                     this.cargarCliente(id);
+                  }else{
+                    this.edit = false;
                   }
               });
   }
@@ -52,10 +55,14 @@ export class ClienteComponent implements OnInit {
     //create search FormControl
     this.searchControl = new FormControl();
 
-    this.setCurrentPosition();
+    this._domicilioService.getDomicilios()
+                          .subscribe(res=>{
+                            this.domicilios = res.domicilios;
+                          });
 
     //load Places Autocomplete
     this.mapsAPILoader.load().then(() => {
+      this.setCurrentPosition();
 
       let autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
         types: ["address"]
@@ -72,8 +79,10 @@ export class ClienteComponent implements OnInit {
           }
           
           //set latitude, longitude and zoom
-          this.lat = place.geometry.location.lat();
-          this.lng = place.geometry.location.lng();
+          this.domicilio.latitud = place.geometry.location.lat();
+          this.domicilio.longitud = place.geometry.location.lng();
+
+          this.getGeoLocation();
         });
       });
     });
@@ -83,10 +92,43 @@ export class ClienteComponent implements OnInit {
   setCurrentPosition() {
     if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition((position) => {
-        this.lat = position.coords.latitude;
-        this.lng = position.coords.longitude;
+        this.domicilio.latitud = position.coords.latitude;
+        this.domicilio.longitud = position.coords.longitude;
+
+        this.getGeoLocation();
       });
+
+      
     }
+  }
+
+  getGeoLocation() {
+    if (navigator.geolocation) {
+        let geocoder = new google.maps.Geocoder();
+        let latlng: google.maps.LatLng  = new google.maps.LatLng(this.domicilio.latitud, this.domicilio.longitud);
+        let request: google.maps.GeocoderRequest =  { location: latlng} ;
+    
+        geocoder.geocode(request, (results, status) => {
+          if (status == google.maps.GeocoderStatus.OK) {
+
+            delete this.domicilio._id;
+            delete this.domicilio.fechaAlta;
+            delete this.domicilio.fechaBaja;
+
+            this.domicilio.direccion = results[0].formatted_address;
+            this.searchElementRef.nativeElement.value = this.domicilio.direccion;
+          }
+        });
+    }
+  }
+
+  setDomicilio(e){
+    let { lat, lng } = e.coords;
+
+    this.domicilio.latitud = lat;
+    this.domicilio.longitud = lng;
+    
+    this.getGeoLocation();
   }
 
   cargarCliente( id: string){
@@ -96,16 +138,30 @@ export class ClienteComponent implements OnInit {
                         });
   }
 
+  changeDomicilio(){
+    console.log('Cambio!!!', this.domicilioSelected);
+    this.domicilio = this.domicilios.find( d => d._id === this.domicilioSelected);
+    console.log('Domicilio actualizado', this.domicilio);
+  }
+
   guardarCliente( f:NgForm){
     if ( f.invalid ) {
       return;
     }
 
-    this._clienteService.createCliente( this.cliente)
+    if (this.edit) {
+      this._clienteService.updateCliente( this.cliente )
+                          .subscribe(res=>{
+                            swal(res.cliente.razonSocial, res.mensaje , 'success');
+                            this.cliente = res.cliente
+                          });
+    } else {
+      this._clienteService.createCliente( this.cliente)
                         .subscribe( res =>{
                           swal(res.cliente.razonSocial, res.mensaje , 'success');
-                          this.cliente = res.cliente
+                          this.router.navigate(['/cliente', res.cliente._id]);
                         });
+    }
   }
 
 }
