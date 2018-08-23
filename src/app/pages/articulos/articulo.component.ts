@@ -19,7 +19,9 @@ export class ArticuloComponent implements OnInit {
   rubros: Rubro[] = [];
 
   imageUpload: File;
-  imageTemp: File;
+  imageTemp: string;
+
+  nuevo: boolean = true;
 
   constructor(
     private _articuloService: ArticuloService,
@@ -32,6 +34,7 @@ export class ArticuloComponent implements OnInit {
 
         if ( id !== 'nuevo' ) {
           this.cargarArticulo(id);
+          this.nuevo = false;
         }
      });
    }
@@ -53,11 +56,24 @@ export class ArticuloComponent implements OnInit {
       return;
     }
 
-    this._articuloService.createArticulo( this.articulo)
+    if ( this.nuevo ) {
+      this._articuloService.createArticulo( this.articulo)
                         .subscribe( res =>{
                           swal(res.articulo.denominacion, res.mensaje , 'success');
-                          this.articulo = res.articulo
+                          this.router.navigate(['articulo', res.articulo._id]);
                         });
+    }else{
+      this._articuloService.updateArticulo( this.articulo )
+                        .subscribe( res=>{
+                          // console.log(res);
+                          swal(res.articulo.denominacion, res.mensaje , 'success');
+                        },err =>{
+                          // console.log(err.error.mensaje);
+                          swal('Error!', err.error.mensaje , 'error');
+                        });
+    }
+
+    
   }
 
   getImage( file: File ){

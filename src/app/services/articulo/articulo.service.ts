@@ -61,7 +61,7 @@ export class ArticuloService {
   }
 
   updateArticulo( articulo:Articulo ){
-    let url = BASE_URL+ '/articulo';
+    let url = BASE_URL+ '/articulo/'+ articulo._id;
 
     const headers = new HttpHeaders({
       'Authorization': this.token

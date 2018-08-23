@@ -4,7 +4,6 @@ import { RubroService } from '../../services/service.index';
 
 declare const swal:any;
 declare const $:any;
-import * as moment from 'moment'; 
 
 @Component({
   selector: 'app-rubros',
@@ -117,17 +116,25 @@ export class RubrosComponent implements OnInit {
     this._rubroService.updateRubro(rubro)
                       .subscribe( res=>{
                         swal( res.rubro.denominacion , res.mensaje ,'success');
+                      }, err =>{
+                        swal( 'Error!', err.error.mensaje,'error');
                       });
   }
 
   crearRubro( formulario:any ){
-    console.log(formulario);
+    let { codigo,denominacion,padre } = formulario;
     
-    let newRubro = new Rubro(formulario.codigo,formulario.denominacion,formulario.padre === "" ? null : formulario.padre );
+    let newRubro = new Rubro(codigo,denominacion,padre === "" ? null : padre );
     this._rubroService.createRubro(newRubro)
                       .subscribe( res =>{
                         swal(res.rubro.denominacion, res.mensaje ,'success');
                         this.rubros.push(res.rubro);
+                        $("#modalCreate").modal('hide');
+                      },err =>{
+                        let { message } = err.error.err.errors.codigo
+                        let { mensaje } = err.error;
+                        
+                        swal( mensaje + '!', message,'error');
                       });
   }
 }

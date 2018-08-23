@@ -12,4 +12,8 @@ export class PedidosComponent implements OnInit {
   ngOnInit() {
   }
 
+  buscarPedidos(ev){
+
+  }
+
 }
