@@ -19,7 +19,7 @@ export class ArticuloComponent implements OnInit {
   rubros: Rubro[] = [];
 
   imageUpload: File;
-  imageTemp: string;
+  imageTemp: any;
 
   nuevo: boolean = true;
 

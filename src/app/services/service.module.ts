@@ -11,7 +11,8 @@ import { SharedService,
   ClienteService,
   ArticuloService,
   DomicilioService,
-  PedidoService } from './service.index';
+  PedidoService,
+  VerificaTokenGuard } from './service.index';
 import { ModalUploadService } from '../components/modal-upload/modal-upload.service';
 
 
@@ -32,7 +33,8 @@ import { ModalUploadService } from '../components/modal-upload/modal-upload.serv
     ClienteService,
     ArticuloService,
     DomicilioService,
-    PedidoService
+    PedidoService,
+    VerificaTokenGuard
   ],
   declarations: []
 })

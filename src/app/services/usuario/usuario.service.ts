@@ -1,4 +1,4 @@
-import { map } from 'rxjs/operators';
+import { map, catchError } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { Usuario } from '../../modelos/usuario.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -6,6 +6,7 @@ import { BASE_URL } from '../../config/config';
 import { UsuarioRespose } from '../../respuestas/usuario.response';
 import { Router } from '@angular/router';
 import { UploadService } from '../upload/upload.service';
+import { Observable } from 'rxjs';
 
 declare const swal:any;
 
@@ -78,6 +79,27 @@ export class UsuarioService {
       this.token = '';
       this.usuario = null;
     }
+  }
+
+  renuevaToken(){
+    let url = BASE_URL + '/renuevatoken';
+    
+    const headers = new HttpHeaders({
+      'Authorization': this.token
+    });
+
+    return this._http.get( url ).pipe(
+                    map( (res:any) =>{
+
+                        this.token = res.token
+                        localStorage.setItem('token', this.token);
+                        return true;
+
+                    }),catchError( err =>{
+                        this._router.navigate(['/login']);
+                        swal('Sesion expirada', 'No fue posible renovar token' ,'error');
+                        return Observable.throw( err );
+                    }));
   }
 
   isLogin(){
