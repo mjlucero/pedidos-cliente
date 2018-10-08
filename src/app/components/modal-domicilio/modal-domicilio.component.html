@@ -1,0 +1,28 @@
+<div class="black-background" [ngClass]="_modalDomicilioService.hide">
+    <div class="modal" style="display: block;" role="dialog">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+                </div>
+                <div class="modal-body">
+                    <form class="form-material">
+                        <app-autocomplete (changeGeoData)="setDomicilio( $event )"></app-autocomplete>
+                        <div class="form-group">
+                            <agm-map (mapClick)="setDomicilio( $event )" [style.height.px]="400" [latitude]="domicilio.latitud" [longitude]="domicilio.longitud" [zoom]="zoom">
+                                <agm-marker [latitude]="domicilio.latitud" [longitude]="domicilio.longitud"></agm-marker>
+                            </agm-map>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button (click)="saveDomicilio()" type="button" class="btn btn-primary">Guardar</button>
+                    <button (click)="closeModal()" type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

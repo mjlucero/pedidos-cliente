@@ -12,10 +12,8 @@ import { SharedService,
   ArticuloService,
   DomicilioService,
   PedidoService,
-  VerificaTokenGuard } from './service.index';
-import { ModalUploadService } from '../components/modal-upload/modal-upload.service';
-
-
+  VerificaTokenGuard,
+  ModalUploadService } from './service.index';
 
 @NgModule({
   imports: [
@@ -28,13 +26,13 @@ import { ModalUploadService } from '../components/modal-upload/modal-upload.serv
     UsuarioService,
     LoginGuard,
     UploadService,
-    ModalUploadService,
     RubroService,
     ClienteService,
     ArticuloService,
     DomicilioService,
     PedidoService,
-    VerificaTokenGuard
+    VerificaTokenGuard,
+    ModalUploadService
   ],
   declarations: []
 })

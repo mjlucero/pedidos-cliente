@@ -12,7 +12,7 @@ declare const swal:any;
 export class ModalUploadComponent implements OnInit {
 
   imageUpload: File;
-  imageTemp: File;
+  imageTemp: any;
 
   constructor( private _uploadService: UploadService, public _modalUploadService: ModalUploadService ) {}
 

@@ -5,7 +5,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { SharedModule } from "../shared/shared.module";
 import { PipesModule } from "../pipes/pipes.module";
-import { BuscadorComponent } from "../components/buscador/buscador.component";
 
 
 import { DashboardComponent } from "./dashboard/dashboard.component";
@@ -22,17 +21,12 @@ import { ArticuloComponent } from './articulos/articulo.component';
 import { PedidosComponent } from './pedidos/pedidos.component';
 import { PedidoComponent } from './pedidos/pedido.component';
 
-import { AgmCoreModule } from '@agm/core';
-
-
-
 @NgModule({
   declarations: [
     DashboardComponent,
     GraficasComponent, 
     ProfileComponent, 
     UsuariosComponent,
-    BuscadorComponent,
     RubrosComponent,
     ClientesComponent,
     ClienteComponent,
@@ -50,11 +44,7 @@ import { AgmCoreModule } from '@agm/core';
       FormsModule,
       NgSelectModule,
       ReactiveFormsModule,
-      PipesModule,
-      AgmCoreModule.forRoot({
-        apiKey: 'AIzaSyDOP6i326mY32uBmQMc9-yxg0T6ink5-rE',
-        libraries: ["places"]
-      })
+      PipesModule
     ],
   exports: [
     DashboardComponent, 

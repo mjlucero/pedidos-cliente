@@ -1,5 +1,7 @@
 <app-buscador (emitTermino)="buscarDomicilios( $event )" placeholder="Buscar domicilio..."></app-buscador>
 
+<app-autocomplete></app-autocomplete>
+
 <div class="row" *ngIf="cargando">
     <div class="col-sm-12">
         <div class="alert alert-warning text-center">
@@ -17,7 +19,7 @@
         <div class="card">
             <div class="card-body">
                 <div class="text-right">
-                    <button type="button" [routerLink]="['/domicilio', 'nuevo']" class="btn waves-effect waves-light btn-rounded btn-primary"><i class="fa fa-plus"></i> Crear Domicilio</button>
+                    <button type="button" (click)="createDomicilio()" class="btn waves-effect waves-light btn-rounded btn-primary"><i class="fa fa-plus"></i> Crear Domicilio</button>
                 </div>
                 <h3 class="card-title">Domicilios registrados ( <small>{{ total }}</small> )</h3>
                 <table class="table table-hover">
@@ -41,7 +43,7 @@
                                 {{ domicilio.fechaBaja }}
                             </td>
                             <td>
-                                <button [routerLink]="['/domicilio', domicilio._id]" class="btn btn-primary">
+                                <button (click)="editDomicilio(domicilio)" class="btn btn-primary">
                                 <i class="fa fa-pencil"></i>
                               </button>
 

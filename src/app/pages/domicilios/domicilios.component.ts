@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Domicilio } from '../../modelos/domicilio.model';
 import { DomicilioService } from '../../services/service.index';
+import { ModalDomicilioService } from '../../components/modal-domicilio/modal-domicilio.service';
 
 @Component({
   selector: 'app-domicilos',
@@ -20,7 +21,10 @@ export class DomiciliosComponent implements OnInit {
   desdeBusqueda: number = 0;
   buscando: boolean = false;
 
-  constructor( private _domicilioService: DomicilioService) { }
+  constructor( 
+    private _domicilioService: DomicilioService,
+    private _modalDomicilioService: ModalDomicilioService
+  ) { }
 
   ngOnInit() {
     this.cargarDomicilios();
@@ -89,5 +93,14 @@ export class DomiciliosComponent implements OnInit {
       this.desdeBusqueda += valor;
       this.buscarDomicilios( this.terminoBusqueda );
     }
+  }
+
+  createDomicilio(){
+    let domicilio = new Domicilio('',0,0);
+    this._modalDomicilioService.showModal(domicilio);
+  }
+
+  editDomicilio( domicilio: Domicilio){
+    this._modalDomicilioService.showModal(domicilio);
   }
 }

@@ -6,6 +6,8 @@ import { APP_ROUTES } from './app.routes';
 
 //Modulos
 import { SharedModule } from './shared/shared.module';
+import { AgmCoreModule } from '@agm/core';
+
 //Componentes
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -31,7 +33,11 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     ServiceModule,
     FormsModule,
     ReactiveFormsModule,
-    SharedModule
+    SharedModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyCN3Aaysh1WuYiV287fOilbiIjtQ_9RiAk',
+      libraries: ["places"]
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]
